@@ -28,4 +28,10 @@ Unidad para crear mensajes en las aplicaciones al estilo de Windows Vista.
 
 * <font color="Maroon"> ***Utileria*** </font>
 
-Unidad que contiene un conjunto de funciones y procedimientos que son utiles para usar en las aplicaciones Delphi. 
+Unidad que contiene un conjunto de funciones y procedimientos que son utiles para usar en las aplicaciones Delphi.
+
+
+* <font color="Maroon"> ***DataGenerator*** </font>
+
+Unidad que contiene una clase para generar datos aleatorios. Esta unidad es muy util para usar en tus aplicaciones que desarrolles en Delphi y para llenar tus tablas en una base de datos.
+
