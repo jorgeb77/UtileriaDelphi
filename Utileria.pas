@@ -62,13 +62,12 @@ type
     function NombreMes(Mes : Integer) : String;
     function FechaLarga(Fecha: TDate) : String;
     function Edad(FechaNacimiento : TDate) : string;
-    function CalcularEdad(FechaNacimiento : TDate) : Integer;
+    function CalcularEdad(FechaNacimiento : TDate) : Word;
     function DiaDeLaSemana(Fecha : TDateTime) : string;
     function Hora24(HoraCorta : string; IncluyeSegundos : Boolean) : string;
     function PrimerDiaDelMes(const Fecha : TDateTime) : TDateTime;
     function UltimoDiaDelMes(const Fecha : TDateTime) : TDateTime;
     function TiempoEntreFechas(FechaInicial : TDateTime; FechaFinal : TDateTime) : string;
-    function CalculaEdad(FechaNacimiento : TDate) : Integer;
     function MayorParaElecciones(FechaNacimiento : TDate) : Boolean;
     function SigloDeFecha(const Fecha : TDateTime) : Integer;
     function SecondToTime(const Seconds : Cardinal) : Double;
@@ -782,18 +781,22 @@ end;
 
 
 //PARA CALCULAR LA EDAD DE UNA PERSONA...
-function CalcularEdad(FechaNacimiento : TDate) : Integer;
+function CalcularEdad(FechaNacimiento : TDate) : Word;
 var
-  an, mn, dn : Word;
-  ahoy, mhoy, dhoy : Word;
+  Hoy : TDate;
+  AnioNacimiento, MesNacimiento, DiaNacimiento : Word;
+  AnioActual, MesActual, DiaActual : Word;
 begin
-  DecodeDate(FechaNacimiento, an, mn, dn);
-  DecodeDate(Now, ahoy, mhoy, dhoy);
+  Hoy := Date;
+  DecodeDate(FechaNacimiento, AnioNacimiento, MesNacimiento, DiaNacimiento);
+  DecodeDate(Hoy, AnioActual, MesActual, DiaActual);
 
-  if (mn > mhoy) or ((mn = mhoy) and (dn > dhoy)) then
-    Result := ahoy - an - 1
-  else
-    Result := ahoy - an;
+  Result := AnioActual - AnioNacimiento;
+
+  // Si el cumpleaños aún no ha ocurrido este año, restamos 1 a la edad
+  if (MesActual < MesNacimiento)
+  or ((MesActual = MesNacimiento) and (DiaActual < DiaNacimiento)) then
+    Dec(Result);
 end;
 
 function DiaDeLaSemana(Fecha : TDateTime) : string;
@@ -897,31 +900,6 @@ Begin
       Salida := Salida + IntToStr(CantDias) + ' día ';
 
    Result := Salida;
-end;
-
-function CalculaEdad(FechaNacimiento : TDate) : Integer;
-var
-  vMesFecha, vAnyFecha, vDiaFecha, vMesActual, vAnyActual, vDiaActual : Word;
-  vEdad : Integer;
-begin
-  DecodeDate(FechaNacimiento,vAnyFecha,vMesFecha,vDiaFecha);
-  DecodeDate(Now,vAnyActual,vMesActual,vDiaActual);
-  if vAnyActual > vAnyFecha then
-    begin
-      vEdad := vAnyActual - vAnyFecha;
-      if vMesActual < vMesFecha then
-        vEdad := vEdad - 1
-      else
-        if vMesActual = vMesFecha then
-          if vDiaActual < vDiaFecha then
-            vEdad := vEdad - 1;
-      Result := vEdad;
-    end
-  else
-    Result := 0;
-
-  if FechaNacimiento = 0 then
-    Result := 0;
 end;
 
 // ES VERDADERO CUANDO LA FECHA NAC. LO HACE MAYOR PARA LAS PROXIMAS ELECCIONES
