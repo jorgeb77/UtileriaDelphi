@@ -58,6 +58,7 @@ type
     class function GenerateRandomPhoneNumber(Locale : TDataLocale) : string;
     class function GenerateRandomPhoneNumberType(Locale : TDataLocale) : string;
     class function GenerateRandomMaritalStatus(Locale : TDataLocale) : string;
+    class function GenerateRandomHobbies(Locale : TDataLocale) : string;
 
     // [ NEGOCIOS ]
 
@@ -176,6 +177,23 @@ const
 
   ExcepcionesFemeninas_ES : array[0..3] of string = (
     'mercedes', 'dolores', 'consuelo', 'remedios');
+
+
+  PASATIEMPOS_ES : array[0..66] of string = (
+    'Impresión 3D', 'Actuación', 'Mochilero', 'Paracaidismo base', 'Béisbol',
+    'Baloncesto', 'Juegos de mesa', 'Culturismo', 'Caligrafía', 'Tueste de café',
+    'Colorear', 'Programación informática', 'Cocinar', 'Ganchillo', 'Criptografía',
+    'Ciclismo', 'Artes digitales', 'Teatro', 'Dibujo', 'Conducir',
+    'Electrónica', 'Bordado', 'Moda', 'Pesca', 'Videojuegos',
+    'Jardinería', 'Genealogía', 'Soplado de vidrio', 'Graffiti', 'Senderismo',
+    'Elaboración casera de cerveza', 'Trote', 'Kayak', 'Kitesurf', 'Tejer',
+    'Construcción con Lego', 'Ganzúa', 'Bicicleta de montaña', 'Montañismo', 'Orientación',
+    'Pintura', 'Fotografía', 'Polo', 'Alfarería', 'Rompecabezas',
+    'Acolchado', 'Rafting', 'Rapel', 'Lectura', 'Escalada en roca',
+    'Correr', 'Navegación a vela', 'Scrapbooking', 'Buceo', 'Escultura',
+    'Costura', 'Cantar', 'Patín sobre ruedas', 'Dibujo a mano alzada', 'Comedia en vivo',
+    'Sudoku', 'Surf', 'Tenis de mesa', 'Videojuegos', 'Deportes acuáticos',
+    'Escritura', 'Yoga');
 
 
   Titulos_ES : array[0..29] of string = (
@@ -411,6 +429,22 @@ const
 
   ExcepcionesFemeninas_US : array[0..3] of string = ('alex', 'sam', 'chris', 'pat');
 
+
+  PASATIEMPOS_US : array[0..66] of string = (
+    '3D printing', 'Acting', 'Backpacking', 'Base jumping', 'Baseball',
+    'Basketball', 'Board games', 'Bodybuilding', 'Calligraphy', 'Coffee roasting',
+    'Colouring', 'Computer programming', 'Cooking', 'Crocheting', 'Cryptography',
+    'Cycling', 'Digital arts', 'Drama', 'Drawing', 'Driving',
+    'Electronics', 'Embroidery', 'Fashion', 'Fishing', 'Gaming',
+    'Gardening', 'Genealogy', 'Glassblowing', 'Graffiti', 'Hiking',
+    'Homebrewing', 'Jogging', 'Kayaking', 'Kitesurfing', 'Knitting',
+    'Lego building', 'Lockpicking', 'Mountain biking', 'Mountaineering', 'Orienteering',
+    'Painting', 'Photography', 'Polo', 'Pottery', 'Puzzles',
+    'Quilting', 'Rafting', 'Rappelling', 'Reading', 'Rock climbing',
+    'Running', 'Sailing', 'Scrapbooking', 'Scuba diving', 'Sculpting',
+    'Sewing', 'Singing', 'Skateboarding', 'Sketching', 'Stand-up comedy',
+    'Sudoku', 'Surfing', 'Table tennis', 'Video gaming', 'Water sports',
+    'Writing', 'Yoga');
 
   Titulos_US : array[0..29] of string = (
     'Engineer', 'Doctor', 'Lawyer', 'Architect', 'Accountant', 'Teacher',
@@ -918,6 +952,17 @@ begin
   case Locale of
     dlLatino : Result := MaritalStatus_ES[Random(Length(MaritalStatus_ES))];
     dlUS     : Result := MaritalStatus_US[Random(Length(MaritalStatus_US))];
+  else
+    Result := '';
+  end;
+
+end;
+
+class function TDataGenerator.GenerateRandomHobbies(Locale : TDataLocale) : string;
+begin
+  case Locale of
+    dlLatino : Result := PASATIEMPOS_ES[Random(Length(PASATIEMPOS_ES))];
+    dlUS     : Result := PASATIEMPOS_US[Random(Length(PASATIEMPOS_US))];
   else
     Result := '';
   end;
@@ -1679,11 +1724,12 @@ end;
 
 class function TDataGenerator.GenerateRandomPaymentMethod(Locale : TDataLocale) : string;
 const
-  PaymentMethods_ES : array[0..6] of string = ('Efectivo', 'Tarjeta crédito',
+  PaymentMethods_ES : array[0..7] of string = ('Efectivo', 'Credito',
+                                               'Tarjeta crédito',
                                                'Tarjeta débito', 'PayPal',
                                                'Cheque', 'Giro postal',
                                                'Transferencia bancaria');
-  PaymentMethods_US : array[0..6] of string = ('Cash', 'Credit Card',
+  PaymentMethods_US : array[0..7] of string = ('Cash', 'Credit', 'Credit Card',
                                                'Debit Card', 'PayPal', 'Check',
                                                'Money order', 'Bank Transfer');
 begin
