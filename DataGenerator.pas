@@ -15,9 +15,10 @@ type
     LastName  : string;
     FullName  : string;
     Email     : string;
-    Sexo      : string;
-    FechaNacimiento : TDate;
-    Edad : Word;
+    Sex      : string;
+    Birthdate : TDate;
+    Age : Word;
+    MaritalStatus : string;
   end;
 
 type
@@ -57,7 +58,6 @@ type
     class function GetRandomPerson(Locale : TDataLocale; Gender : TGender = genderAny; YearOfBirthStart : Word = 1950; YearOfBirthEnd : Word = 1990) : TPerson;
     class function GenerateRandomPhoneNumber(Locale : TDataLocale) : string;
     class function GenerateRandomPhoneNumberType(Locale : TDataLocale) : string;
-    class function GenerateRandomMaritalStatus(Locale : TDataLocale) : string;
     class function GenerateRandomHobbies(Locale : TDataLocale) : string;
 
     // [ NEGOCIOS ]
@@ -141,7 +141,7 @@ type
     class function GenerateRandomBeautySalonServices(Locale : TDataLocale) : string;
 
 
-
+    class function GetRandomElement(const List : array of string) : string;
   end;
 
 implementation
@@ -651,7 +651,7 @@ const
   );
 
 
-function GetRandomElement(const List : array of string) : string;
+class function TDataGenerator.GetRandomElement(const List : array of string) : string;
 begin
   Result := List[Random(Length(List))];
 end;
@@ -728,9 +728,9 @@ begin
     dlUS :
       begin
         if IsInArray(NameLower, Nombres_Femeninos_US) then
-          Exit('Femenino');
+          Exit('Female');
         if IsInArray(NameLower, Nombres_Masculinos_US) then
-          Exit('Masculino');
+          Exit('Male');
       end;
   end;
 
@@ -746,9 +746,9 @@ begin
     dlUS :
       begin
         if IsInArray(NameLower, ExcepcionesMasculinas_US) then
-          Exit('Masculino');
+          Exit('Male');
         if IsInArray(NameLower, ExcepcionesFemeninas_US) then
-          Exit('Femenino');
+          Exit('Female');
       end;
   end;
 
@@ -771,9 +771,9 @@ begin
       or EndsWith(NameLower, 'ie')
       or EndsWith(NameLower, 'ey')
       or EndsWith(NameLower, 'elle') then
-        Result := 'Femenino'
+        Result := 'Female'
       else
-        Result := 'Masculino';
+        Result := 'Male';
   else
     Result := 'Desconocido';
   end;
@@ -799,6 +799,11 @@ end;
 
 // Función unificada para generar una persona aleatoria
 class function TDataGenerator.GetRandomPerson(Locale : TDataLocale; Gender : TGender = genderAny; YearOfBirthStart : Word = 1950; YearOfBirthEnd : Word = 1990) : TPerson;
+const
+  MaritalStatus_M : array[1..4] of string = ('Casado', 'Soltero', 'Divorciado','Viudo');
+  MaritalStatus_F : array[1..4] of string = ('Casada', 'Soltera', 'Divorciada','Viuda');
+  MaritalStatus_US : array[1..4] of string = ('Married', 'Single', 'Divorced', 'Widow');
+
 var
   FirstName : string;
   SelectedGender : TGender;
@@ -862,13 +867,35 @@ begin
   Result.Email    := GenerateEmailFromName(Result.FirstName, Result.LastName);
 
   // Asignar el sexo basado en el nombre (utilizando la función de detección)
-  Result.Sexo := DetectSex(Result.FirstName, Locale);
+  Result.Sex := DetectSex(Result.FirstName, Locale);
 
   //Creamos la fecha de nacimiento dentro de un rango especifico
-  Result.FechaNacimiento := GenerateRandomRangeDate(YearOfBirthStart, YearOfBirthEnd);
+  Result.Birthdate := GenerateRandomRangeDate(YearOfBirthStart, YearOfBirthEnd);
 
   //Creamos la edad a partir de la fecha de nacimiento
-  Result.Edad := CalcularEdad(Result.FechaNacimiento);
+  Result.Age := CalcularEdad(Result.Birthdate);
+
+  // Aqui determinamos el estado civil de acuerdo al sexo y a la localización
+  case Locale of
+    dlLatino : begin
+                 case SelectedGender of
+                   genderAny    : begin
+                                    if Result.Sex = 'Masculino' then
+                                      Result.MaritalStatus := GetRandomElement(MaritalStatus_M)
+                                    else
+                                      Result.MaritalStatus := GetRandomElement(MaritalStatus_F);
+                                  end;
+
+                   genderMale   : Result.MaritalStatus := GetRandomElement(MaritalStatus_M);
+                   genderFemale : Result.MaritalStatus := GetRandomElement(MaritalStatus_F);
+                 end;
+               end;
+
+    dlUS     : begin
+                 Result.MaritalStatus := GetRandomElement(MaritalStatus_US);
+               end;
+
+  end;
 
 end;
 
@@ -934,24 +961,6 @@ begin
   case Locale of
     dlLatino : Result := PhoneNumberTypes_ES[Random(Length(PhoneNumberTypes_ES))];
     dlUS     : Result := PhoneNumberTypes_US[Random(Length(PhoneNumberTypes_US))];
-  else
-    Result := '';
-  end;
-
-end;
-
-class function TDataGenerator.GenerateRandomMaritalStatus(Locale : TDataLocale) : string;
-const
-  MaritalStatus_US : array[0..3] of string = ('Married', 'Single', 'Divorced',
-                                              'Widow');
-
-  MaritalStatus_ES : array[0..3] of string = ('Casado', 'Soltero', 'Divorciado',
-                                              'Viudo');
-begin
-  // Seleccionar un estado civil aleatorio del array
-  case Locale of
-    dlLatino : Result := MaritalStatus_ES[Random(Length(MaritalStatus_ES))];
-    dlUS     : Result := MaritalStatus_US[Random(Length(MaritalStatus_US))];
   else
     Result := '';
   end;
