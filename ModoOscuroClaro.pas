@@ -39,7 +39,7 @@ uses
   cxDBProgressBar, cxDBTrackBar, dxDBZoomTrackBar, cxDBCheckListBox,
   cxDBColorComboBox, cxDBCheckComboBox, cxDBCheckGroup, dxDBColorEdit, cxDBEdit,
   cxDBNavigator, dxDBBreadcrumbEdit, dxDBCheckGroupBox, dxDBToggleSwitch,
-  AdvMemo, AdvmSQLS;
+  cxGeometry, dxFramedControl, dxPanel;
 
 
 type
@@ -232,6 +232,15 @@ begin
               Style.LookAndFeel.SkinName := 'Office2007Blue'
             else
               Style.LookAndFeel.SkinName := 'VisualStudio2013Dark';
+          end;
+
+      if AForm.Components[I] is TdxPanel then
+        with AForm.Components[I] as TdxPanel do
+          begin
+            if TemaActual = TAppTema.Claro then
+              LookAndFeel.SkinName := 'Office2007Blue'
+            else
+              LookAndFeel.SkinName := 'VisualStudio2013Dark';
           end;
 
       if AForm.Components[I] is TcxScrollBar then
@@ -845,20 +854,20 @@ begin
               end;
           end;
 
-      if AForm.Components[I] is TAdvMemo then
-        with AForm.Components[I] as TAdvMemo do
-          begin
-            if TemaActual = TAppTema.Claro then
-              begin
-                BkColor    := clWhite;
-                Font.Color := clBlack;
-              end
-            else
-              begin
-                BkColor    := clBlack;
-                Font.Color := clWhite;
-              end;
-          end;
+//      if AForm.Components[I] is TAdvMemo then
+//        with AForm.Components[I] as TAdvMemo do
+//          begin
+//            if TemaActual = TAppTema.Claro then
+//              begin
+//                BkColor    := clWhite;
+//                Font.Color := clBlack;
+//              end
+//            else
+//              begin
+//                BkColor    := clBlack;
+//                Font.Color := clWhite;
+//              end;
+//          end;
 
 
     end;

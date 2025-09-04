@@ -1,4 +1,4 @@
-/// implement TaskDialog window (native on Vista/Seven, emulated on XP)
+﻿/// implement TaskDialog window (native on Vista/Seven, emulated on XP)
 // - this unit is a part of the freeware Synopse mORMot framework,
 // licensed under a MPL/GPL/LGPL tri-license; version 1.18
 unit SynTaskDialog;
