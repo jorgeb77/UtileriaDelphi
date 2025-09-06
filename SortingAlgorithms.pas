@@ -1,32 +1,33 @@
-unit SortingAlgorithms;
+﻿unit SortingAlgorithms;
 
 interface
 
 uses
-  System.Classes, System.SysUtils, System.Generics.Collections, System.Generics.Defaults;
+  System.Classes, System.SysUtils, System.Generics.Collections,
+  System.Generics.Defaults;
 
 type
   TSortingAlgorithms<T> = class
   private
-    class procedure MergeSortInternal(var arr: TArray<T>; left, right: Integer;
-      const Comparer: IComparer<T>);
-    class procedure QuickSortInternal(var arr: TArray<T>; left, right: Integer;
-      const Comparer: IComparer<T>);
-    class procedure Merge(var arr: TArray<T>; left, middle, right: Integer;
-      const Comparer: IComparer<T>);
+    class procedure MergeSortInternal(var arr : TArray<T>; left, right : Integer;
+      const Comparer : IComparer<T>);
+    class procedure QuickSortInternal(var arr : TArray<T>; left, right : Integer;
+      const Comparer : IComparer<T>);
+    class procedure Merge(var arr : TArray<T>; left, middle, right : Integer;
+      const Comparer : IComparer<T>);
   public
-    class procedure BubbleSort(var arr: TArray<T>; const Comparer: IComparer<T>);
-    class procedure MergeSort(var arr: TArray<T>; const Comparer: IComparer<T>);
-    class procedure QuickSort(var arr: TArray<T>; const Comparer: IComparer<T>);
-    class procedure InsertionSort(var arr: TArray<T>; const Comparer: IComparer<T>);
+    class procedure BubbleSort(var arr : TArray<T>; const Comparer : IComparer<T>);
+    class procedure MergeSort(var arr : TArray<T>; const Comparer : IComparer<T>);
+    class procedure QuickSort(var arr : TArray<T>; const Comparer : IComparer<T>);
+    class procedure InsertionSort(var arr : TArray<T>; const Comparer : IComparer<T>);
   end;
 
 implementation
 
 { TSortingAlgorithms<T> }
 
-class procedure TSortingAlgorithms<T>.BubbleSort(var arr: TArray<T>;
-  const Comparer: IComparer<T>);
+class procedure TSortingAlgorithms<T>.BubbleSort(var arr : TArray<T>;
+  const Comparer : IComparer<T>);
 var
   I, J : Integer;
   temp : T;
@@ -41,8 +42,8 @@ begin
       end;
 end;
 
-class procedure TSortingAlgorithms<T>.InsertionSort(var arr: TArray<T>;
-  const Comparer: IComparer<T>);
+class procedure TSortingAlgorithms<T>.InsertionSort(var arr : TArray<T>;
+  const Comparer : IComparer<T>);
 var
   I, J : Integer;
   key : T;
@@ -60,8 +61,8 @@ begin
   end;
 end;
 
-class procedure TSortingAlgorithms<T>.Merge(var arr: TArray<T>; left, middle, right: Integer;
-  const Comparer: IComparer<T>);
+class procedure TSortingAlgorithms<T>.Merge(var arr : TArray<T>; left, middle, right : Integer;
+  const Comparer : IComparer<T>);
 var
   I, J, K : Integer;
   leftArray, rightArray : TArray<T>;
@@ -76,6 +77,7 @@ begin
   // Copiar datos a los arrays temporales
   for I := 0 to leftSize - 1 do
     leftArray[I] := arr[left + I];
+
   for J := 0 to rightSize - 1 do
     rightArray[J] := arr[middle + 1 + J];
 
@@ -86,16 +88,16 @@ begin
 
   while (I < leftSize) and (J < rightSize) do
   begin
-    if Comparer.Compare(leftArray[I], rightArray[J]) <= 0 then
-    begin
-      arr[K] := leftArray[I];
-      Inc(I);
-    end
+      if Comparer.Compare(leftArray[I], rightArray[J]) <= 0 then
+      begin
+        arr[K] := leftArray[I];
+        Inc(I);
+      end
     else
-    begin
-      arr[K] := rightArray[J];
-      Inc(J);
-    end;
+      begin
+        arr[K] := rightArray[J];
+        Inc(J);
+      end;
     Inc(K);
   end;
 
@@ -115,50 +117,53 @@ begin
   end;
 end;
 
-class procedure TSortingAlgorithms<T>.MergeSort(var arr: TArray<T>;
-  const Comparer: IComparer<T>);
+class procedure TSortingAlgorithms<T>.MergeSort(var arr : TArray<T>;
+  const Comparer : IComparer<T>);
 begin
   if Length(arr) <= 1 then
     Exit;
+
   MergeSortInternal(arr, Low(arr), High(arr), Comparer);
 end;
 
-class procedure TSortingAlgorithms<T>.MergeSortInternal(var arr: TArray<T>;
-  left, right: Integer; const Comparer: IComparer<T>);
+class procedure TSortingAlgorithms<T>.MergeSortInternal(var arr : TArray<T>;
+  left, right : Integer; const Comparer : IComparer<T>);
 var
   middle: Integer;
 begin
   if left < right then
-  begin
-    middle := left + (right - left) div 2;
-    MergeSortInternal(arr, left, middle, Comparer);
-    MergeSortInternal(arr, middle + 1, right, Comparer);
-    Merge(arr, left, middle, right, Comparer);
-  end;
+    begin
+      middle := left + (right - left) div 2;
+      MergeSortInternal(arr, left, middle, Comparer);
+      MergeSortInternal(arr, middle + 1, right, Comparer);
+      Merge(arr, left, middle, right, Comparer);
+    end;
 end;
 
-class procedure TSortingAlgorithms<T>.QuickSort(var arr: TArray<T>;
-  const Comparer: IComparer<T>);
+class procedure TSortingAlgorithms<T>.QuickSort(var arr : TArray<T>;
+  const Comparer : IComparer<T>);
 begin
   if Length(arr) <= 1 then
     Exit;
+
   QuickSortInternal(arr, Low(arr), High(arr), Comparer);
 end;
 
-class procedure TSortingAlgorithms<T>.QuickSortInternal(var arr: TArray<T>;
-  left, right: Integer; const Comparer: IComparer<T>);
+class procedure TSortingAlgorithms<T>.QuickSortInternal(var arr : TArray<T>;
+  left, right : Integer; const Comparer : IComparer<T>);
 var
   I, J : Integer;
   pivot, temp : T;
 begin
-  I := left;
-  J := right;
+  I     := left;
+  J     := right;
   pivot := arr[(left + right) div 2];
 
   while I <= J do
   begin
     while Comparer.Compare(arr[I], pivot) < 0 do
       Inc(I);
+
     while Comparer.Compare(arr[J], pivot) > 0 do
       Dec(J);
 
@@ -174,13 +179,14 @@ begin
 
   if left < J then
     QuickSortInternal(arr, left, J, Comparer);
+
   if I < right then
     QuickSortInternal(arr, I, right, Comparer);
 end;
 
 {
 
-// Para ordenar n�meros:
+// Para ordenar números:
 var
   numbersArray: TArray<Integer>;
 begin

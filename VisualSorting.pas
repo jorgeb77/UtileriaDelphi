@@ -1,4 +1,4 @@
-unit VisualSorting;
+锘縰nit VisualSorting;
 
 {
     ** Algoritmos de Ordenamiento para Componentes Visuales **
@@ -26,27 +26,27 @@ uses
 type
   TVisualSortHelper = class
   public
-    // M閠odos para Memo
+    // M茅todos para Memo
     class procedure SortMemo(Memo : TcxMemo); overload;
     class procedure SortMemoReverse(Memo : TcxMemo);
 
-    // M閠odos para ListBox
+    // M茅todos para ListBox
     class procedure SortListBox(ListBox : TcxListBox); overload;
     class procedure SortListBoxReverse(ListBox : TcxListBox);
 
-    // M閠odos para ComboBox
+    // M茅todos para ComboBox
     class procedure SortComboBox(ComboBox : TcxComboBox); overload;
     class procedure SortComboBoxReverse(ComboBox : TcxComboBox);
 
-    // M閠odos para CheckListBox
+    // M茅todos para CheckListBox
     class procedure SortCheckListBox(CheckListBox : TcxCheckListBox); overload;
     class procedure SortCheckListBoxReverse(CheckListBox : TcxCheckListBox);
 
-    // M閠odos para TreeView
+    // M茅todos para TreeView
     class procedure SortTreeViewNode(TreeView : TcxTreeView; Node : TTreeNode);
     class procedure SortTreeViewNodeReverse(TreeView : TcxTreeView; Node : TTreeNode);
 
-    // M閠odos para ListView
+    // M茅todos para ListView
     class procedure SortListView(ListView : TcxListView; Column : Integer); overload;
     class procedure SortListViewReverse(ListView : TcxListView; Column : Integer);
   end;
@@ -68,10 +68,10 @@ type
     SubItems : TStringList;
   end;
 
-{ Implementaci髇 para TMemo }
+{ Implementaci贸n para TMemo }
 class procedure TVisualSortHelper.SortMemo(Memo : TcxMemo);
 var
-  Lines: TStringList;
+  Lines : TStringList;
 begin
   Lines := TStringList.Create;
   try
@@ -104,7 +104,7 @@ begin
   end;
 end;
 
-{ Implementaci髇 para TListBox }
+{ Implementaci贸n para TListBox }
 class procedure TVisualSortHelper.SortListBox(ListBox : TcxListBox);
 var
   Items : TStringList;
@@ -138,7 +138,7 @@ begin
   end;
 end;
 
-{ Implementaci髇 para TComboBox }
+{ Implementaci贸n para TComboBox }
 class procedure TVisualSortHelper.SortComboBox(ComboBox : TcxComboBox);
 var
   Items        : TStringList;
@@ -150,7 +150,7 @@ begin
     Items.Assign(ComboBox.Properties.Items);
     Items.Sort;
     ComboBox.Properties.Items.Assign(Items);
-    ComboBox.Text := SelectedItem; // Mantener la selecci髇
+    ComboBox.Text := SelectedItem; // Mantener la selecci贸n
   finally
     Items.Free;
   end;
@@ -171,14 +171,14 @@ begin
     for I:= Items.Count - 1 downto 0 do
       TempList.Add(Items[I]);
     ComboBox.Properties.Items.Assign(TempList);
-    ComboBox.Text := SelectedItem; // Mantener la selecci髇
+    ComboBox.Text := SelectedItem; // Mantener la selecci贸n
   finally
     Items.Free;
     TempList.Free;
   end;
 end;
 
-{ Implementaci髇 para TCheckListBox }
+{ Implementaci贸n para TCheckListBox }
 {
 class procedure TVisualSortHelper.SortCheckListBox(CheckListBox : TCheckListBox);
 var
@@ -262,7 +262,7 @@ end;
 }
 
 
-{ Implementaci髇 para TcxCheckListBox }
+{ Implementaci贸n para TcxCheckListBox }
 class procedure TVisualSortHelper.SortCheckListBox(CheckListBox : TcxCheckListBox);
 var
   I : Integer;
@@ -349,7 +349,7 @@ begin
   end;
 end;
 
-{ Implementaci髇 para TTreeView }
+{ Implementaci贸n para TTreeView }
 class procedure TVisualSortHelper.SortTreeViewNode(TreeView : TcxTreeView; Node : TTreeNode);
 var
   NodeList : TList<TTreeNode>;
@@ -377,13 +377,13 @@ begin
         Result := CompareText(Left.Text, Right.Text);
       end));
 
-    // Reordenar nodos en el 醨bol
+    // Reordenar nodos en el 谩rbol
     TreeView.Items.BeginUpdate;
     try
       for I:= 0 to NodeList.Count - 1 do
       begin
         NodeList[I].MoveTo(Node, naAddChild);
-        // Ordenar recursivamente los sub醨boles
+        // Ordenar recursivamente los sub谩rboles
         SortTreeViewNode(TreeView, NodeList[I]);
       end;
     finally
@@ -433,7 +433,7 @@ begin
   end;
 end;
 
-{ Implementaci髇 para TListView }
+{ Implementaci贸n para TListView }
 class procedure TVisualSortHelper.SortListView(ListView : TcxListView; Column : Integer);
 var
   I, J : Integer;

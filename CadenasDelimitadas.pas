@@ -1,4 +1,4 @@
-unit CadenasDelimitadas;
+ï»¿unit CadenasDelimitadas;
 
 interface
 
@@ -23,7 +23,7 @@ type
     property TokenCount : Integer read GetTokenCount;
     property LastToken : string read GetLastToken;
 
-    // Métodos
+    // MÃ©todos
     function GetToken(const Index : Integer) : string;
     function TokenExists(const TokenValue : string) : Boolean;
     function IsLastToken(const TokenValue : string) : Boolean; overload;
@@ -54,13 +54,13 @@ uses
 constructor TDelimitedString.Create(const AText, ADelimiter : string);
 begin
   inherited Create;
-  FText := AText;
+  FText      := AText;
   FDelimiter := ADelimiter;
 end;
 
-{ Método para obtener la cantidad de tokens }
+{ MÃ©todo para obtener la cantidad de tokens }
 /// <summary>
-/// Cuenta el número de elementos (tokens) en la cadena delimitada
+/// Cuenta el nÃºmero de elementos (tokens) en la cadena delimitada
 /// </summary>
 /// <example>
 /// var
@@ -93,10 +93,10 @@ begin
   end;
 end;
 
-{ Método para obtener un token específico }
+{ MÃ©todo para obtener un token especÃ­fico }
 /// <summary>
-/// Obtiene el token en la posición especificada (base 1)
-/// Lanza una excepción si el índice está fuera de rango
+/// Obtiene el token en la posiciÃ³n especificada (base 1)
+/// Lanza una excepciÃ³n si el Ã­ndice estÃ¡ fuera de rango
 /// </summary>
 /// <example>
 /// var
@@ -141,9 +141,9 @@ begin
   Result := '';
 end;
 
-{ Método para obtener el último token }
+{ MÃ©todo para obtener el Ãºltimo token }
 /// <summary>
-/// Obtiene el último token de la cadena delimitada
+/// Obtiene el Ãºltimo token de la cadena delimitada
 /// </summary>
 /// <example>
 /// var
@@ -159,10 +159,10 @@ begin
   Result := GetToken(TokenCount);
 end;
 
-{ Método para verificar si existe un token }
+{ MÃ©todo para verificar si existe un token }
 /// <summary>
-/// Verifica si un valor específico existe como token en la cadena
-/// La comparación no es sensible a mayúsculas/minúsculas
+/// Verifica si un valor especÃ­fico existe como token en la cadena
+/// La comparaciÃ³n no es sensible a mayÃºsculas/minÃºsculas
 /// </summary>
 /// <example>
 /// var
@@ -186,9 +186,9 @@ begin
       end;
 end;
 
-{ Método para verificar si un valor es el último token }
+{ MÃ©todo para verificar si un valor es el Ãºltimo token }
 /// <summary>
-/// Verifica si el valor especificado es el último token de la cadena
+/// Verifica si el valor especificado es el Ãºltimo token de la cadena
 /// </summary>
 /// <example>
 /// var
@@ -204,9 +204,9 @@ begin
   Result := SameText(GetLastToken, TokenValue);
 end;
 
-{ Método para verificar si una posición es el último token }
+{ MÃ©todo para verificar si una posiciÃ³n es el Ãºltimo token }
 /// <summary>
-/// Verifica si el índice especificado corresponde al último token
+/// Verifica si el Ã­ndice especificado corresponde al Ãºltimo token
 /// </summary>
 /// <example>
 /// var
@@ -222,10 +222,10 @@ begin
   Result := Index = TokenCount;
 end;
 
-{ Método para eliminar un token }
+{ MÃ©todo para eliminar un token }
 /// <summary>
-/// Elimina el token en la posición especificada y devuelve la nueva cadena
-/// También actualiza el texto interno de la clase
+/// Elimina el token en la posiciÃ³n especificada y devuelve la nueva cadena
+/// TambiÃ©n actualiza el texto interno de la clase
 /// </summary>
 /// <example>
 /// var
@@ -263,7 +263,7 @@ begin
     Result := FText;
 end;
 
-{ Método para agregar un nuevo token }
+{ MÃ©todo para agregar un nuevo token }
 /// <summary>
 /// Agrega un nuevo token al final de la cadena
 /// </summary>
@@ -283,7 +283,7 @@ begin
     FText := FText + FDelimiter + Value;
 end;
 
-{ Método para dividir la cadena en un array }
+{ MÃ©todo para dividir la cadena en un array }
 /// <summary>
 /// Divide la cadena delimitada en un array de strings
 /// </summary>
